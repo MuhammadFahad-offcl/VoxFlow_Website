@@ -5,6 +5,21 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
 
+  /* Vercel Web Analytics: queue calls until its script has loaded. Only event names are sent, never typed text. */
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  function track(name, data) { window.va('event', { name: name, data: data || {} }); }
+
+  /* Tool ticker: the list is in the HTML once; a copy is added here so the loop has no gap. */
+  (function () {
+    var row = document.querySelector('.ticker__track');
+    var list = row && row.querySelector('ul');
+    if (!list || reduceMotion) { return; }
+    var copy = list.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    row.appendChild(copy);
+    row.classList.add('is-looping');
+  })();
+
   /* Hero demo: a scripted conversation the visitor can tap through. */
   (function () {
     var log = document.getElementById('chat-log');
@@ -64,7 +79,11 @@
         button.type = 'button';
         button.className = 'chip';
         button.textContent = item.label;
-        button.addEventListener('click', function () { autoplay = false; pick(item); });
+        button.addEventListener('click', function () {
+          if (autoplay) { track('Demo used'); }
+          autoplay = false;
+          pick(item);
+        });
         options.appendChild(button);
       });
       if (autoplay && typeof autoIndex === 'number') {
@@ -158,6 +177,7 @@
       link.href = 'https://wa.me/923044782376?text=' + encodeURIComponent(lines.join('\n'));
     }
     form.addEventListener('input', update);
+    link.addEventListener('click', function () { track('Audit WhatsApp click', { business: business.value }); });
     update();
     return {
       setBusiness: function (name) {
@@ -165,6 +185,70 @@
         update();
       }
     };
+  })();
+
+  /* Callback request: shown only when the server says the lead endpoint is configured. */
+  (function () {
+    var form = document.getElementById('callback-form');
+    if (!form || typeof window.fetch !== 'function') { return; }
+    var status = document.getElementById('callback-status');
+    var button = document.getElementById('callback-submit');
+    var name = document.getElementById('callback-name');
+    var phone = document.getElementById('callback-phone');
+    var trap = document.getElementById('callback-website');
+    var business = document.getElementById('audit-business');
+    var task = document.getElementById('audit-task');
+    var shownAt = 0;
+
+    function say(text, kind) {
+      status.textContent = text;
+      status.className = 'callback__status' + (kind ? ' is-' + kind : '');
+    }
+
+    fetch('/api/lead', { headers: { Accept: 'application/json' } })
+      .then(function (response) { return response.ok ? response.json() : { enabled: false }; })
+      .then(function (info) {
+        if (info && info.enabled === true) { form.hidden = false; shownAt = Date.now(); }
+      })
+      .catch(function () {
+        /* Endpoint unreachable: the form stays hidden and WhatsApp remains the way to book. */
+      });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var cleanName = name.value.trim();
+      var digits = phone.value.replace(/\D/g, '');
+      if (cleanName.length < 2) { say('Please enter your name.', 'error'); name.focus(); return; }
+      if (digits.length < 7 || digits.length > 15) { say('Please enter a phone number with 7 to 15 digits.', 'error'); phone.focus(); return; }
+
+      button.disabled = true;
+      say('Sending...');
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: cleanName,
+          phone: phone.value.trim(),
+          business: business ? business.value : '',
+          task: task ? task.value.trim() : '',
+          website: trap.value,
+          elapsed: Date.now() - shownAt
+        })
+      })
+        .then(function (response) {
+          if (!response.ok) { throw new Error('HTTP ' + response.status); }
+          return response.json();
+        })
+        .then(function () {
+          form.reset();
+          say('Thank you. We will contact you soon.', 'ok');
+          track('Callback request');
+        })
+        .catch(function () {
+          say('That did not send. Please try again, or use the WhatsApp button above.', 'error');
+        })
+        .then(function () { button.disabled = false; });
+    });
   })();
 
   /* Industries: tabs, with arrow-key support. Without this script every panel stays visible. */

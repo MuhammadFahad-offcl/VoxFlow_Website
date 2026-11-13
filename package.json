@@ -1,0 +1,6 @@
+{
+  "name": "voxflow-website",
+  "private": true,
+  "type": "module",
+  "description": "VoxFlow marketing site. Static files plus one serverless function in api/."
+}
