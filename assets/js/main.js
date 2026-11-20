@@ -311,8 +311,11 @@
     var share = document.getElementById('share');
     var out = {
       hours: document.getElementById('hours-out'), rate: document.getElementById('rate-out'), share: document.getElementById('share-out'),
-      monthly: document.getElementById('monthly'), yearly: document.getElementById('yearly')
+      monthly: document.getElementById('monthly'), yearly: document.getElementById('yearly'),
+      plan: document.getElementById('plan-note')
     };
+    /* Published monthly plan range, in rupees. Keep in step with the pricing line and the cost FAQ. */
+    var PLAN = { min: 20000, max: 30000 };
     function currency() {
       var chosen = form.querySelector('input[name="currency"]:checked');
       return RATES[chosen ? chosen.value : 'PKR'] || RATES.PKR;
@@ -325,6 +328,19 @@
       out.share.textContent = share.value + '%';
       out.monthly.textContent = money(yearly / 12);
       out.yearly.textContent = money(yearly);
+      updatePlan(yearly / 12);
+    }
+    /* Shows the break-even in hours, so the saving is read against the plan and not as free money. PKR only: no UAE price is published. */
+    function updatePlan(monthly) {
+      if (!out.plan) { return; }
+      var chosen = form.querySelector('input[name="currency"]:checked');
+      if (chosen && chosen.value !== 'PKR') { out.plan.textContent = ''; return; }
+      var perHour = Number(rate.value) * WEEKS_PER_YEAR / 12;
+      var low = Math.max(1, Math.round(PLAN.min / perHour));
+      var high = Math.max(low, Math.round(PLAN.max / perHour));
+      var text = 'For scale: the monthly plan is Rs ' + number.format(PLAN.min) + ' to ' + number.format(PLAN.max) + '. At ' + money(Number(rate.value)) + ' an hour, it is covered once an agent takes over about ' + (low === high ? low : low + ' to ' + high) + ' hours a week.';
+      if (monthly < PLAN.min) { text += ' Your numbers are below that, so the audit is where we check whether it is worth it.'; }
+      out.plan.textContent = text;
     }
     function switchCurrency() {
       var c = currency();
