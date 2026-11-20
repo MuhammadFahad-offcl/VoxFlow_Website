@@ -231,8 +231,9 @@ section[id] { scroll-margin-top: var(--header-h); }
 .case__lede { font-size: var(--step-1); line-height: 1.5; color: var(--ink-soft); }
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); width: 100%; }
 .stats div { display: flex; flex-direction: column-reverse; gap: var(--s-2); padding-top: var(--s-4); border-top: 2px solid var(--blue); }
-.stats dd { font-size: clamp(2.25rem, 1.2rem + 4.4vw, 4.5rem); font-weight: 600; line-height: 0.95; letter-spacing: -0.05em; color: var(--blue); }
+.stats dd { font-size: clamp(2rem, 1rem + 3.2vw, 3.5rem); font-weight: 600; line-height: 0.95; letter-spacing: -0.05em; color: var(--blue); }
 .stats dt { font-size: var(--step--1); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+.case__note { font-size: var(--step--1); color: var(--ink-soft); max-width: 48ch; }
 .case__panel { display: grid; gap: var(--s-4); padding: clamp(1.5rem, 4vw, 2.5rem); background: var(--tint); border: 1px solid var(--line); border-radius: var(--r-3); }
 .case__panel h3 { font-size: var(--step-2); }
 .case__stack { font-size: var(--step--1); color: var(--ink-soft); }
