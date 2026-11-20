@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="VoxFlow | AI Automation Agency in Pakistan and the UAE">
 <meta name="twitter:description" content="VoxFlow builds AI agents that answer customers, take bookings and automate repeat work for businesses in Pakistan and the UAE. Book a free automation audit.">
 <meta name="twitter:image" content="https://voxflow.agency/assets/img/og-image.png">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#0C0B0A">
 <meta name="format-detection" content="telephone=no">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
@@ -110,6 +110,22 @@
         },
         {
           "@type": "Question",
+          "name": "What does it cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most projects are Rs 30,000 to 40,000 to set up, then Rs 20,000 to 30,000 a month for hosting, monitoring and changes. As a guide, the monthly plan is covered once the agent takes over about 12 to 17 hours a week of work that costs you Rs 400 an hour. As a guide, the monthly plan is covered once the agent takes over about 12 to 17 hours a week of work that costs you Rs&nbsp;400 an hour. The exact figure depends on what the agent does, and you get it in writing after the free audit, before any work begins."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work with businesses in the UAE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pakistan comes first. VoxFlow is based in Lahore and our live work is here. If you run a business in the UAE, book an audit and we will tell you honestly whether we can serve you well."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Which languages does the agent reply in?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -184,7 +200,7 @@
         </div>
         <ul class="hero__facts">
           <li><b>24/7</b> always on</li>
-          <li><b>~10&nbsp;s</b> to book</li>
+          <li><b>200+</b> clinic enquiries logged</li>
           <li><b>English and Roman Urdu</b></li>
         </ul>
       </div>
@@ -222,17 +238,6 @@
       </div>
     </div>
   </section>
-
-  <div class="ticker">
-    <div class="ticker__inner">
-      <p class="ticker__label">Built with</p>
-      <div class="ticker__window">
-        <div class="ticker__track">
-          <ul><li>n8n</li><li>OpenAI</li><li>WhatsApp Cloud API</li><li>Groq</li><li>Supabase</li><li>Google Sheets</li><li>Vapi</li><li>Next.js</li><li>PostgreSQL</li></ul>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <section class="section tinted" id="industries">
     <div class="wrap">
@@ -413,16 +418,17 @@
       </div>
       <div class="case__grid">
         <div class="case__copy reveal">
-          <p class="case__lede measure">Patients arrive from the clinic&rsquo;s Facebook and Instagram ads and message at any hour. The agent answers their questions, checks the clinic&rsquo;s requirements and books the appointment. The team steps in only when a patient needs a person.</p>
+          <p class="case__lede measure">Patients arrive from the clinic&rsquo;s Facebook and Instagram ads and message at any hour. The agent answers their questions, asks for the reports the doctor needs and logs every enquiry. The team steps in only when a patient needs a person.</p>
           <dl class="stats">
             <div><dt>Always on</dt><dd>24/7</dd></div>
-            <div><dt>To book</dt><dd>~10s</dd></div>
-            <div><dt>Real patients</dt><dd>Live</dd></div>
+            <div><dt>Enquiries logged</dt><dd>200+</dd></div>
+            <div><dt>Live since 2026</dt><dd>Oct</dd></div>
           </dl>
+          <p class="case__note">Counted from the clinic&rsquo;s own enquiry sheet, 30 Oct to 18 Nov 2026.</p>
           <a class="btn" href="#audit">Get one for your business</a>
         </div>
         <div class="case__panel reveal">
-          <h3>What it does every day</h3>
+          <h3>What it does</h3>
           <ul class="ticks">
             <li>Answers patients the moment they message from an ad</li>
             <li>Books through a normal chat with tap-to-select options</li>
@@ -444,7 +450,7 @@
         <h2>If your team repeats it every day, <span class="accent">an agent can take it.</span></h2>
       </div>
       <ul class="bento">
-        <li class="card card--blue card--lead reveal">
+        <li class="card card--accent card--lead reveal">
           <div class="card__art" aria-hidden="true"><div class="art-chat"><span></span><span></span><span></span></div></div>
           <h3>WhatsApp agents</h3>
           <p>Reply the moment a customer messages, answer from your own services and policies, then book or hand over to staff.</p>
@@ -495,8 +501,9 @@
               <input type="range" id="hours" name="hours" min="1" max="100" step="1" value="20">
             </div>
             <div class="field">
-              <div class="field__row"><label for="rate">Cost of one staff hour</label><output id="rate-out" for="rate">Rs 1,500</output></div>
-              <input type="range" id="rate" name="rate" min="500" max="5000" step="100" value="1500">
+              <div class="field__row"><label for="rate">Cost of one staff hour</label><output id="rate-out" for="rate">Rs 400</output></div>
+              <input type="range" id="rate" name="rate" min="100" max="5000" step="50" value="400" aria-describedby="rate-hint">
+              <p class="field__hint" id="rate-hint">Not sure? Take one staff member&rsquo;s monthly pay and divide it by about 200 hours.</p>
             </div>
             <div class="field">
               <div class="field__row"><label for="share">Share an agent could take over</label><output id="share-out" for="share">70%</output></div>
@@ -505,10 +512,11 @@
           </div>
           <div class="result">
             <dl>
-              <div class="result__big"><dt>Saved each month</dt><dd><output id="monthly" for="hours rate share">Rs 91,000</output></dd></div>
-              <div><dt>Saved each year</dt><dd><output id="yearly" for="hours rate share">Rs 1,092,000</output></dd></div>
+              <div class="result__big"><dt>Saved each month</dt><dd><output id="monthly" for="hours rate share">Rs 24,267</output></dd></div>
+              <div><dt>Saved each year</dt><dd><output id="yearly" for="hours rate share">Rs 291,200</output></dd></div>
             </dl>
             <p class="result__note">Hours × hourly cost × share automated, over 52 weeks. Staff time freed up, before the cost of the automation itself.</p>
+            <p class="result__note" id="plan-note"></p>
             <a class="btn btn--white" href="#audit">Check these numbers in a free audit</a>
           </div>
         </div>
@@ -524,7 +532,7 @@
       </div>
       <ol class="steps">
         <li class="reveal"><h3>Book a free audit</h3><p>A short call about what your team repeats every day. You leave with a list of what is worth automating.</p></li>
-        <li class="reveal"><h3>Get a written quote</h3><p>Scope, price and timeline on one page before any work begins.</p></li>
+        <li class="reveal"><h3>Get a written quote</h3><p>Scope, price and timeline on one page before any work begins. Most projects are Rs&nbsp;30,000 to 40,000 to set up, then Rs&nbsp;20,000 to 30,000 a month. The quote gives the exact figure.</p></li>
         <li class="reveal"><h3>Try it free for 7 to 10&nbsp;days</h3><p>The agent runs on your real messages. If it does not earn its place, you stop there.</p></li>
         <li class="reveal"><h3>We keep it running</h3><p>Hosting, monitoring and changes are covered by a monthly support plan.</p></li>
       </ol>
@@ -536,7 +544,7 @@
       <div class="about reveal">
         <p class="eyebrow">Who you will work with</p>
         <h2>The builder <span class="accent">answers the phone</span></h2>
-        <p>VoxFlow is run by Muhammad Fahad, founder and lead automation architect, from Lahore. He builds each system himself and stays on to maintain it.</p>
+        <p>VoxFlow AI Solutions is run by Muhammad Fahad, founder and lead automation architect, from Lahore. He builds each system himself and stays on to maintain it.</p>
         <dl class="facts">
           <div><dt>Founded</dt><dd>May 2026, Lahore, Pakistan</dd></div>
           <div><dt>Certified</dt><dd>Agentic AI &amp; Automation Expert, Tech7 Academy, June 2026</dd></div>
@@ -552,6 +560,14 @@
         <details>
           <summary>My business is not a clinic or a salon. Can you still help?</summary>
           <p>Yes. If your team answers the same questions, takes bookings, confirms orders or chases follow-ups, that work can be automated. The audit is where we find out how much.</p>
+        </details>
+        <details>
+          <summary>What does it cost?</summary>
+          <p>Most projects are Rs&nbsp;30,000 to 40,000 to set up, then Rs&nbsp;20,000 to 30,000 a month for hosting, monitoring and changes. The exact figure depends on what the agent does, and you get it in writing after the free audit, before any work begins.</p>
+        </details>
+        <details>
+          <summary>Do you work with businesses in the UAE?</summary>
+          <p>Pakistan comes first. VoxFlow is based in Lahore and our live work is here. If you run a business in the UAE, book an audit and we will tell you honestly whether we can serve you well.</p>
         </details>
         <details>
           <summary>Which languages does the agent reply in?</summary>
@@ -588,6 +604,7 @@
         <h3 id="audit-form-title">Book your free audit</h3>
         <label>Your business
           <select id="audit-business" name="business">
+            <option value="" selected>Choose your business</option>
             <option>Clinic or hospital</option>
             <option>Salon or spa</option>
             <option>Restaurant or café</option>
@@ -624,7 +641,7 @@
           </div>
           <button class="btn btn--ghost" type="submit" id="callback-submit">Ask us to contact you</button>
           <p class="callback__status" id="callback-status" role="status"></p>
-          <p class="audit__fine">Sent to VoxFlow and used only to contact you about your audit.</p>
+          <p class="audit__fine">Sent to VoxFlow and used only to contact you about your audit. <a href="/privacy">Privacy</a></p>
         </form>
       </div>
       <dl class="contact">
@@ -644,6 +661,7 @@
     <ul>
       <li><a href="https://www.linkedin.com/in/muhammadfahad-offcl/">LinkedIn</a></li>
       <li><a href="https://muhammadfahad.vercel.app/">Founder&rsquo;s portfolio</a></li>
+      <li><a href="/privacy">Privacy</a></li>
     </ul>
   </div>
 </footer>

@@ -9,17 +9,6 @@
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   function track(name, data) { window.va('event', { name: name, data: data || {} }); }
 
-  /* Tool ticker: the list is in the HTML once; a copy is added here so the loop has no gap. */
-  (function () {
-    var row = document.querySelector('.ticker__track');
-    var list = row && row.querySelector('ul');
-    if (!list || reduceMotion) { return; }
-    var copy = list.cloneNode(true);
-    copy.setAttribute('aria-hidden', 'true');
-    row.appendChild(copy);
-    row.classList.add('is-looping');
-  })();
-
   /* Hero demo: a scripted conversation the visitor can tap through. */
   (function () {
     var log = document.getElementById('chat-log');
@@ -171,13 +160,15 @@
     var link = document.getElementById('audit-link');
     if (!form || !business || !task || !link) { return { setBusiness: function () {} }; }
     function update() {
-      var lines = ["Hi VoxFlow, I'd like to book a free automation audit.", 'Business: ' + business.value];
+      var lines = ["Hi VoxFlow, I'd like to book a free automation audit."];
+      /* The business line is added only once the visitor has chosen one, so nothing is guessed for them. */
+      if (business.value) { lines.push('Business: ' + business.value); }
       var detail = task.value.trim();
       if (detail) { lines.push('What takes the most time: ' + detail); }
       link.href = 'https://wa.me/923044782376?text=' + encodeURIComponent(lines.join('\n'));
     }
     form.addEventListener('input', update);
-    link.addEventListener('click', function () { track('Audit WhatsApp click', { business: business.value }); });
+    link.addEventListener('click', function () { track('Audit WhatsApp click', { business: business.value || 'not chosen' }); });
     update();
     return {
       setBusiness: function (name) {
@@ -256,27 +247,29 @@
     var root = document.getElementById('inds');
     if (!root) { return; }
     var tabs = root.querySelectorAll('[role="tab"]');
-    function select(tab, focus) {
+    /* chosen is true only when the visitor picked the tab. The first tab shown on load must not
+       fill in the audit form, or a visitor who never opened this section would send "Clinic". */
+    function select(tab, focus, chosen) {
       each(tabs, function (other) {
         var active = other === tab;
         other.setAttribute('aria-selected', String(active));
         other.tabIndex = active ? 0 : -1;
         var panel = document.getElementById(other.getAttribute('aria-controls'));
         if (panel) { panel.hidden = !active; }
-        if (active && panel) { audit.setBusiness(panel.getAttribute('data-business')); }
+        if (active && panel && chosen) { audit.setBusiness(panel.getAttribute('data-business')); }
       });
       if (focus) { tab.focus(); }
     }
     each(tabs, function (tab, index) {
-      tab.addEventListener('click', function () { select(tab, false); });
+      tab.addEventListener('click', function () { select(tab, false, true); });
       tab.addEventListener('keydown', function (event) {
         var step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
         if (!step) { return; }
         event.preventDefault();
-        select(tabs[(index + step + tabs.length) % tabs.length], true);
+        select(tabs[(index + step + tabs.length) % tabs.length], true, true);
       });
     });
-    select(tabs[0], false);
+    select(tabs[0], false, false);
   })();
 
   /* Night shift: the step crossing the middle of the screen sets the clock and the sky. */
@@ -306,9 +299,10 @@
   (function () {
     var form = document.getElementById('savings-form');
     if (!form) { return; }
+    /* Starting values are a plain front-desk hour. Higher-paid staff or an owner's own time can be set with the slider. */
     var RATES = {
-      PKR: { prefix: 'Rs ', min: 500, max: 5000, step: 100, value: 1500 },
-      AED: { prefix: 'AED ', min: 20, max: 200, step: 5, value: 60 }
+      PKR: { prefix: 'Rs ', min: 100, max: 5000, step: 50, value: 400 },
+      AED: { prefix: 'AED ', min: 10, max: 200, step: 5, value: 30 }
     };
     var WEEKS_PER_YEAR = 52;
     var number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
@@ -317,8 +311,11 @@
     var share = document.getElementById('share');
     var out = {
       hours: document.getElementById('hours-out'), rate: document.getElementById('rate-out'), share: document.getElementById('share-out'),
-      monthly: document.getElementById('monthly'), yearly: document.getElementById('yearly')
+      monthly: document.getElementById('monthly'), yearly: document.getElementById('yearly'),
+      plan: document.getElementById('plan-note')
     };
+    /* Published monthly plan range, in rupees. Keep in step with the pricing line and the cost FAQ. */
+    var PLAN = { min: 20000, max: 30000 };
     function currency() {
       var chosen = form.querySelector('input[name="currency"]:checked');
       return RATES[chosen ? chosen.value : 'PKR'] || RATES.PKR;
@@ -331,6 +328,19 @@
       out.share.textContent = share.value + '%';
       out.monthly.textContent = money(yearly / 12);
       out.yearly.textContent = money(yearly);
+      updatePlan(yearly / 12);
+    }
+    /* Shows the break-even in hours, so the saving is read against the plan and not as free money. PKR only: no UAE price is published. */
+    function updatePlan(monthly) {
+      if (!out.plan) { return; }
+      var chosen = form.querySelector('input[name="currency"]:checked');
+      if (chosen && chosen.value !== 'PKR') { out.plan.textContent = ''; return; }
+      var perHour = Number(rate.value) * WEEKS_PER_YEAR / 12;
+      var low = Math.max(1, Math.round(PLAN.min / perHour));
+      var high = Math.max(low, Math.round(PLAN.max / perHour));
+      var text = 'For scale: the monthly plan is Rs ' + number.format(PLAN.min) + ' to ' + number.format(PLAN.max) + '. At ' + money(Number(rate.value)) + ' an hour, it is covered once an agent takes over about ' + (low === high ? low : low + ' to ' + high) + ' hours a week.';
+      if (monthly < PLAN.min) { text += ' Your numbers are below that, so the audit is where we check whether it is worth it.'; }
+      out.plan.textContent = text;
     }
     function switchCurrency() {
       var c = currency();
