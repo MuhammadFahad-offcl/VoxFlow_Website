@@ -167,19 +167,6 @@ section[id] { scroll-margin-top: var(--header-h); }
 .slip__token { display: flex; align-items: baseline; gap: var(--s-3); }
 .slip__num { font-weight: 700; font-size: 2.25rem; line-height: 1.1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
 
-/* Tool ticker */
-.ticker { border-block: 1px solid var(--line); overflow: hidden; }
-.ticker__inner { display: flex; align-items: center; gap: var(--s-6); padding-block: var(--s-4); }
-.ticker__label { flex: none; padding-left: var(--gutter); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
-.ticker__window { overflow: hidden; flex: 1; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-/* The script appends a second copy of the list and adds .is-looping, so the HTML carries the list once. */
-.ticker__track { display: flex; width: max-content; }
-.ticker__track.is-looping { animation: ticker 36s linear infinite; }
-.ticker__track.is-looping:hover { animation-play-state: paused; }
-.ticker__track ul { display: flex; gap: var(--s-7); padding-right: var(--s-7); }
-.ticker__track li { font-size: var(--step-1); font-weight: 500; letter-spacing: -0.02em; color: var(--ink-soft); white-space: nowrap; }
-@keyframes ticker { to { transform: translateX(-50%); } }
-
 /* Shared section rhythm */
 .section { padding-block: var(--s-9); }
 .section--flush { padding-top: 0; }
@@ -309,6 +296,7 @@ section[id] { scroll-margin-top: var(--header-h); }
 .field { display: grid; gap: var(--s-1); }
 .field__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--s-1) var(--s-4); }
 .field label { font-weight: 500; }
+.field__hint { font-size: var(--step--1); color: var(--ink-soft); }
 .field output { font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .field input[type="range"] { width: 100%; height: 2.25rem; margin: 0; accent-color: var(--blue); cursor: pointer; }
 .result { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-5); align-content: start; padding: clamp(1.25rem, 3.5vw, 2rem); border-radius: var(--r-2); background: var(--blue); color: #FFFFFF; }
@@ -369,13 +357,23 @@ section[id] { scroll-margin-top: var(--header-h); }
 .contact dt { font-size: var(--step--1); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--on-navy-soft); }
 .contact dd { font-weight: 500; overflow-wrap: anywhere; }
 
+/* Privacy page */
+.prose { display: grid; gap: var(--s-4); justify-items: start; padding-block: var(--s-8) var(--s-9); }
+.prose > * { max-width: 65ch; }
+.prose h2 { font-size: var(--step-2); margin-top: var(--s-5); }
+.prose ul { list-style: disc; padding-left: 1.25rem; display: grid; gap: var(--s-2); }
+.prose p, .prose li { color: var(--ink-soft); }
+.prose strong { color: var(--ink); font-weight: 600; }
+.prose__updated { font-size: var(--step--1); }
+
 /* 404 page */
 .notfound { display: grid; gap: var(--s-5); justify-items: start; padding-block: var(--s-9); min-height: 60vh; align-content: center; }
 .notfound p:not(.eyebrow) { font-size: var(--step-1); color: var(--ink-soft); }
 
 .site-footer { border-top: 1px solid var(--line); font-size: var(--step--1); color: var(--ink-soft); }
 .site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-3) var(--s-5); padding-block: var(--s-5); }
-.site-footer ul { display: flex; flex-wrap: wrap; gap: var(--s-5); }
+.site-footer ul { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-5); }
+.site-footer li a, .contact dd a { display: inline-block; padding-block: var(--s-2); }
 
 @media (min-width: 40rem) {
   .bento { grid-template-columns: repeat(6, minmax(0, 1fr)); }
@@ -413,7 +411,5 @@ section[id] { scroll-margin-top: var(--header-h); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .ticker__track { width: auto; }
-  .ticker__track ul { flex-wrap: wrap; row-gap: var(--s-2); }
   .art-wave i { transform: scaleY(0.6); }
 }

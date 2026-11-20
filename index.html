@@ -223,17 +223,6 @@
     </div>
   </section>
 
-  <div class="ticker">
-    <div class="ticker__inner">
-      <p class="ticker__label">Built with</p>
-      <div class="ticker__window">
-        <div class="ticker__track">
-          <ul><li>n8n</li><li>OpenAI</li><li>WhatsApp Cloud API</li><li>Groq</li><li>Supabase</li><li>Google Sheets</li><li>Vapi</li><li>Next.js</li><li>PostgreSQL</li></ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <section class="section tinted" id="industries">
     <div class="wrap">
       <div class="section__head reveal">
@@ -495,8 +484,9 @@
               <input type="range" id="hours" name="hours" min="1" max="100" step="1" value="20">
             </div>
             <div class="field">
-              <div class="field__row"><label for="rate">Cost of one staff hour</label><output id="rate-out" for="rate">Rs 1,500</output></div>
-              <input type="range" id="rate" name="rate" min="500" max="5000" step="100" value="1500">
+              <div class="field__row"><label for="rate">Cost of one staff hour</label><output id="rate-out" for="rate">Rs 400</output></div>
+              <input type="range" id="rate" name="rate" min="100" max="5000" step="50" value="400" aria-describedby="rate-hint">
+              <p class="field__hint" id="rate-hint">Not sure? Take one staff member&rsquo;s monthly pay and divide it by about 200 hours.</p>
             </div>
             <div class="field">
               <div class="field__row"><label for="share">Share an agent could take over</label><output id="share-out" for="share">70%</output></div>
@@ -505,8 +495,8 @@
           </div>
           <div class="result">
             <dl>
-              <div class="result__big"><dt>Saved each month</dt><dd><output id="monthly" for="hours rate share">Rs 91,000</output></dd></div>
-              <div><dt>Saved each year</dt><dd><output id="yearly" for="hours rate share">Rs 1,092,000</output></dd></div>
+              <div class="result__big"><dt>Saved each month</dt><dd><output id="monthly" for="hours rate share">Rs 24,267</output></dd></div>
+              <div><dt>Saved each year</dt><dd><output id="yearly" for="hours rate share">Rs 291,200</output></dd></div>
             </dl>
             <p class="result__note">Hours × hourly cost × share automated, over 52 weeks. Staff time freed up, before the cost of the automation itself.</p>
             <a class="btn btn--white" href="#audit">Check these numbers in a free audit</a>
@@ -536,7 +526,7 @@
       <div class="about reveal">
         <p class="eyebrow">Who you will work with</p>
         <h2>The builder <span class="accent">answers the phone</span></h2>
-        <p>VoxFlow is run by Muhammad Fahad, founder and lead automation architect, from Lahore. He builds each system himself and stays on to maintain it.</p>
+        <p>VoxFlow AI Solutions is run by Muhammad Fahad, founder and lead automation architect, from Lahore. He builds each system himself and stays on to maintain it.</p>
         <dl class="facts">
           <div><dt>Founded</dt><dd>May 2026, Lahore, Pakistan</dd></div>
           <div><dt>Certified</dt><dd>Agentic AI &amp; Automation Expert, Tech7 Academy, June 2026</dd></div>
@@ -588,6 +578,7 @@
         <h3 id="audit-form-title">Book your free audit</h3>
         <label>Your business
           <select id="audit-business" name="business">
+            <option value="" selected>Choose your business</option>
             <option>Clinic or hospital</option>
             <option>Salon or spa</option>
             <option>Restaurant or café</option>
@@ -624,7 +615,7 @@
           </div>
           <button class="btn btn--ghost" type="submit" id="callback-submit">Ask us to contact you</button>
           <p class="callback__status" id="callback-status" role="status"></p>
-          <p class="audit__fine">Sent to VoxFlow and used only to contact you about your audit.</p>
+          <p class="audit__fine">Sent to VoxFlow and used only to contact you about your audit. <a href="/privacy">Privacy</a></p>
         </form>
       </div>
       <dl class="contact">
@@ -644,6 +635,7 @@
     <ul>
       <li><a href="https://www.linkedin.com/in/muhammadfahad-offcl/">LinkedIn</a></li>
       <li><a href="https://muhammadfahad.vercel.app/">Founder&rsquo;s portfolio</a></li>
+      <li><a href="/privacy">Privacy</a></li>
     </ul>
   </div>
 </footer>
