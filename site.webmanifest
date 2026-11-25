@@ -4,8 +4,8 @@
   "description": "AI automation agency",
   "start_url": "/",
   "display": "browser",
-  "background_color": "#0C0B0A",
-  "theme_color": "#0C0B0A",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "/assets/img/icon-192.png",
