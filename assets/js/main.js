@@ -263,6 +263,7 @@
         var panel = document.getElementById(other.getAttribute('aria-controls'));
         if (panel) { panel.hidden = !active; }
         if (active && panel && chosen) { audit.setBusiness(panel.getAttribute('data-business')); }
+        if (active && chosen && tab.scrollIntoView) { tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' }); }
       });
       if (focus) { tab.focus(); }
     }
