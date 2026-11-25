@@ -1,5 +1,5 @@
 /* VoxFlow website behaviour: hero chat demo, audit booking link, industry tabs,
-   night-shift scroll story, sticky WhatsApp bar and savings calculator. No dependencies. */
+   night-shift scroll story, mobile menu, quick contact bar and savings calculator. No dependencies. */
 (function () {
   'use strict';
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -158,6 +158,7 @@
     var business = document.getElementById('audit-business');
     var task = document.getElementById('audit-task');
     var link = document.getElementById('audit-link');
+    var email = document.getElementById('audit-email');
     if (!form || !business || !task || !link) { return { setBusiness: function () {} }; }
     function update() {
       var lines = ["Hi VoxFlow, I'd like to book a free automation audit."];
@@ -166,6 +167,11 @@
       var detail = task.value.trim();
       if (detail) { lines.push('What takes the most time: ' + detail); }
       link.href = 'https://wa.me/923044782376?text=' + encodeURIComponent(lines.join('\n'));
+      if (email) {
+        email.href = 'mailto:muhammadfahad.offcl@gmail.com?subject=' + encodeURIComponent('Free automation audit request') +
+          '&body=' + encodeURIComponent("Hi VoxFlow,\n\nI'd like to book a free automation audit.\n\nMy business: " + (business.value || '') +
+          '\nWhat takes my team the most time: ' + detail + '\n\nThanks');
+      }
     }
     form.addEventListener('input', update);
     link.addEventListener('click', function () { track('Audit WhatsApp click', { business: business.value || 'not chosen' }); });
@@ -295,13 +301,40 @@
     each(steps, function (step) { observer.observe(step); });
   })();
 
+  /* Mobile menu: a button that opens the section links and contact buttons. Escape or a link click closes it. */
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var menu = document.getElementById('mobile-menu');
+    if (!toggle || !menu) { return; }
+    function setOpen(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      document.documentElement.classList.toggle('menu-open', open);
+    }
+    toggle.addEventListener('click', function () { setOpen(menu.hidden); });
+    menu.addEventListener('click', function (event) { if (event.target.closest('a')) { setOpen(false); } });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); }
+    });
+    if (window.matchMedia) {
+      var wide = window.matchMedia('(min-width: 62rem)');
+      var close = function () { if (wide.matches) { setOpen(false); } };
+      if (wide.addEventListener) { wide.addEventListener('change', close); }
+    }
+  })();
+
+  /* Click tracking: any link with a data-track name sends that event name only, never typed text. */
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[data-track]');
+    if (link) { track(link.getAttribute('data-track')); }
+  });
+
   /* Sticky WhatsApp bar: hidden while the hero buttons or the audit section are on screen, so two booking buttons never sit together. */
   (function () {
     var bar = document.getElementById('wa-bar');
     var hero = document.querySelector('.hero .actions');
     var audit = document.getElementById('audit');
     if (!bar) { return; }
-    bar.addEventListener('click', function () { track('Sticky WhatsApp click'); });
     if (!('IntersectionObserver' in window)) { return; }
     var covered = { hero: true, audit: false };
     function apply() {
@@ -347,6 +380,7 @@
       return RATES[chosen ? chosen.value : 'PKR'] || RATES.PKR;
     }
     function money(amount) { return currency().prefix + number.format(Math.round(amount)); }
+    var waLink = document.getElementById('calc-wa');
     function update() {
       var yearly = Number(hours.value) * Number(rate.value) * (Number(share.value) / 100) * WEEKS_PER_YEAR;
       out.hours.textContent = hours.value + ' h';
@@ -355,6 +389,12 @@
       out.monthly.textContent = money(yearly / 12);
       out.yearly.textContent = money(yearly);
       updatePlan(yearly / 12);
+      if (waLink) {
+        var unit = currency().prefix.trim() === 'Rs' ? 'Rs ' : 'AED ';
+        waLink.href = 'https://wa.me/923044782376?text=' + encodeURIComponent(
+          'Hi VoxFlow, I used your savings calculator: ' + hours.value + ' hours a week of manual work at ' + unit + number.format(Number(rate.value)) +
+          ' an hour, ' + share.value + '% of it automatable, about ' + money(yearly / 12) + ' a month. I\'d like a free audit.');
+      }
     }
     /* Shows the break-even in hours, so the saving is read against the plan and not as free money. PKR only: no UAE price is published. */
     function updatePlan(monthly) {

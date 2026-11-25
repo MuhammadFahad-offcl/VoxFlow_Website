@@ -21,28 +21,57 @@
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/styles.css?v=4">
-<script src="/assets/js/main.js?v=4" defer></script>
+<link rel="stylesheet" href="/assets/css/styles.css?v=5">
+<script src="/assets/js/main.js?v=5" defer></script>
 <script src="/_vercel/insights/script.js" defer></script>
 </head>
 <body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.2 20.8l4.5-1.2A8.8 8.8 0 1 0 12 3.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.1 8.2c-.3.5-.4 1.2 0 2 .8 1.7 2.2 3.1 3.9 3.9.8.4 1.5.3 2-.1l.6-.7-1.9-1.1-.8.7c-.9-.4-1.8-1.3-2.3-2.3l.7-.8-1-1.9z" fill="currentColor"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4.5 7.5 7.5 6 7.5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.8 9 3.5l1.5 3.6-1.7 1.3a10.5 10.5 0 0 0 4.8 4.8l1.3-1.7 3.6 1.5-.3 2.4a2.3 2.3 0 0 1-2.3 2A13.3 13.3 0 0 1 4.6 6.1a2.3 2.3 0 0 1 2-2.3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V16M8 7.9v.1M11.5 16v-5.5M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
 
 <header class="site-header">
   <div class="wrap">
-    <a class="wordmark" href="/" aria-label="VoxFlow, back to the home page"><span class="wordmark__dot"></span>VoxFlow</a>
+    <a class="wordmark" href="/" aria-label="VoxFlow, back to top"><span class="wordmark__dot"></span>VoxFlow</a>
     <nav class="site-nav" aria-label="Main">
       <ul>
         <li><a href="/#industries">Industries</a></li>
         <li><a href="/#night-shift">How it works</a></li>
         <li><a href="/#work">Live work</a></li>
         <li><a href="/#services">Services</a></li>
-        <li><a href="/#savings">Savings</a></li>
+        <li><a href="/#savings">Savings and price</a></li>
         <li><a href="/#faq">Questions</a></li>
       </ul>
     </nav>
-    <a class="btn btn--small" href="/#audit"><span class="only-xs">Free audit</span><span class="hide-xs">Book a free audit</span></a>
+    <div class="header__actions">
+      <a class="header__phone" href="tel:+923044782376" data-track="Call click: header"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/#i-phone"/></svg><span>+92 304 4782376</span></a>
+      <a class="btn btn--small" href="/#audit" data-track="Audit click: header"><span class="only-xs">Free audit</span><span class="hide-xs">Book a free audit</span></a>
+      <button class="nav-toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="mobile-menu"><span class="sr">Menu</span><span class="nav-toggle__open"><svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="/#i-menu"/></svg></span><span class="nav-toggle__close"><svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="/#i-close"/></svg></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="wrap">
+      <ul class="mobile-menu__links">
+        <li><a href="/#industries">Industries</a></li>
+        <li><a href="/#night-shift">How it works</a></li>
+        <li><a href="/#work">Live work</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#savings">Savings and price</a></li>
+        <li><a href="/#faq">Questions</a></li>
+      </ul>
+      <div class="mobile-menu__cta">
+        <a class="btn" href="https://wa.me/923044782376?text=Hi%20VoxFlow%2C%20I%27d%20like%20to%20book%20a%20free%20automation%20audit." data-track="WhatsApp click: menu"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/#i-wa"/></svg>Chat on WhatsApp</a>
+        <a class="btn btn--ghost" href="tel:+923044782376" data-track="Call click: menu"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/#i-phone"/></svg>Call +92 304 4782376</a>
+        <a class="btn btn--ghost" href="mailto:muhammadfahad.offcl@gmail.com?subject=Free%20automation%20audit%20request&amp;body=Hi%20VoxFlow%2C%0A%0AI%27d%20like%20to%20book%20a%20free%20automation%20audit.%0A%0AThanks" data-track="Email click: menu"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="/#i-mail"/></svg>Email us</a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -86,12 +115,21 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <p>© 2026 VoxFlow AI Solutions · Lahore, Pakistan</p>
-    <ul>
+    <div class="site-footer__brand">
+      <a class="wordmark" href="/" aria-label="VoxFlow, back to top"><span class="wordmark__dot"></span>VoxFlow</a>
+      <p>AI agents and automation for businesses in Pakistan and the UAE. Based in Lahore.</p>
+    </div>
+    <ul class="site-footer__contact">
+      <li><a href="https://wa.me/923044782376?text=Hi%20VoxFlow%2C%20I%27d%20like%20to%20book%20a%20free%20automation%20audit." data-track="WhatsApp click: footer"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/#i-wa"/></svg>WhatsApp +92 304 4782376</a></li>
+      <li><a href="tel:+923044782376" data-track="Call click: footer"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/#i-phone"/></svg>Call</a></li>
+      <li><a href="mailto:muhammadfahad.offcl@gmail.com" data-track="Email click: footer"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/#i-mail"/></svg>muhammadfahad.offcl@gmail.com</a></li>
+    </ul>
+    <ul class="site-footer__links">
       <li><a href="https://www.linkedin.com/in/muhammadfahad-offcl/">LinkedIn</a></li>
       <li><a href="https://muhammadfahad.vercel.app/">Founder&rsquo;s portfolio</a></li>
       <li><a href="/privacy">Privacy</a></li>
     </ul>
+    <p class="site-footer__legal">© 2026 VoxFlow AI Solutions · Lahore, Pakistan</p>
   </div>
 </footer>
 </body>
