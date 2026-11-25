@@ -1,5 +1,5 @@
 /* VoxFlow website behaviour: hero chat demo, audit booking link, industry tabs,
-   night-shift scroll story and savings calculator. No dependencies. */
+   night-shift scroll story, sticky WhatsApp bar and savings calculator. No dependencies. */
 (function () {
   'use strict';
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -293,6 +293,32 @@
       entries.forEach(function (entry) { if (entry.isIntersecting) { activate(entry.target); } });
     }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
     each(steps, function (step) { observer.observe(step); });
+  })();
+
+  /* Sticky WhatsApp bar: hidden while the hero buttons or the audit section are on screen, so two booking buttons never sit together. */
+  (function () {
+    var bar = document.getElementById('wa-bar');
+    var hero = document.querySelector('.hero .actions');
+    var audit = document.getElementById('audit');
+    if (!bar) { return; }
+    bar.addEventListener('click', function () { track('Sticky WhatsApp click'); });
+    if (!('IntersectionObserver' in window)) { return; }
+    var covered = { hero: true, audit: false };
+    function apply() {
+      var hide = covered.hero || covered.audit;
+      bar.classList.toggle('is-hidden', hide);
+      bar.tabIndex = hide ? -1 : 0;
+    }
+    function watch(node, key, threshold) {
+      if (!node) { covered[key] = false; return; }
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { covered[key] = entry.isIntersecting; });
+        apply();
+      }, { threshold: threshold }).observe(node);
+    }
+    watch(hero, 'hero', 0.01);
+    watch(audit, 'audit', 0.15);
+    apply();
   })();
 
   /* Savings calculator */
